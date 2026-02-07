@@ -6,7 +6,8 @@ mod state;
 
 use instructions::*;
 
-declare_id!("YFbRgpLHGbKisGA8GYY1ToRH1tAD4ZRLaRvFwHYkoot");
+//changed declare id to the ID in @/target/deploy/
+declare_id!("D76KZXXwmiQNvEsdNQNEbBePXRNiYf5L9Nf2ZjRhoA1v");
 
 #[program]
 pub mod anchor_nft_staking_q4_25 {
@@ -30,7 +31,8 @@ pub mod anchor_nft_staking_q4_25 {
         ctx: Context<CreateCollection>,
         args: CreateCollectionArgs,
     ) -> Result<()> {
-        ctx.accounts.create_collection(args, &ctx.bumps)
+        let args = Box::new(args);
+        ctx.accounts.create_collection(*args, &ctx.bumps)
     }
 
     pub fn mint_nft(ctx: Context<MintNft>) -> Result<()> {
@@ -41,11 +43,11 @@ pub mod anchor_nft_staking_q4_25 {
         ctx.accounts.stake(&ctx.bumps)
     }
 
-    // pub fn unstake(ctx: Context<Unstake>) -> Result<()> {
-    //     ctx.accounts.unstake()
-    // }
+    pub fn unstake(ctx: Context<Unstake>) -> Result<()> {
+        ctx.accounts.unstake()
+    }
 
-    // pub fn claim(ctx: Context<Claim>) -> Result<()> {
-    //     ctx.accounts.claim()
-    // }
+    pub fn claim(ctx: Context<Claim>) -> Result<()> {
+        ctx.accounts.claim()
+    }
 }

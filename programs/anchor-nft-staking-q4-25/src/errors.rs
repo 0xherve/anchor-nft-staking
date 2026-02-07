@@ -21,3 +21,10 @@ pub enum StakeError {
     #[msg("Not Owner")]
     NotOwner,
 }
+
+#[error_code]
+pub enum ClaimError {
+    #[msg("Not Enough Points")]
+    NotEnoughPoints,
+    
+}

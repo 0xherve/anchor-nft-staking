@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use mpl_core::{
-    instructions::AddPluginV1CpiBuilder, types::{FreezeDelegate, Plugin, PluginAuthority}
+    instructions::AddPluginV1CpiBuilder,
+    types::{FreezeDelegate, Plugin, PluginAuthority}
 };
 
 use crate::{
@@ -12,9 +13,15 @@ use crate::{
 pub struct Stake<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
-    #[account(mut)]
+    /// CHECK: You need constraints for anchor to build an IDL
+    #[account(
+        mut,
+        constraint = asset.owner == &mpl_core::ID)]
     pub asset: UncheckedAccount<'info>,
-    #[account(mut)]
+    /// CHECK: You need constraints for anchor to build an IDL
+    #[account(
+        mut,
+        constraint = collection.owner == &mpl_core::ID )]
     pub collection: UncheckedAccount<'info>,
     #[account(
         init,
@@ -37,6 +44,7 @@ pub struct Stake<'info> {
     
     //programs
     pub system_program: Program<'info, System>,
+    ///CHECK: MPL Core program account; only used for CPI 
     pub core_program: UncheckedAccount<'info>,
 }
 
